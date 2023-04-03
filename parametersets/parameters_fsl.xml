@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rap>
+
+    <directoryconventions>
+        <fsldir desc="Path to fsl" ui="dir"></fsldir>
+        <fslsetup desc="Path to fsl setup script, executing before any fsl command" ui="text"></fslsetup>
+        <fsloutputtype desc="Output type used by FSL" ui="text">NIFTI</fsloutputtype>    
+    </directoryconventions>
+
+</rap>    
