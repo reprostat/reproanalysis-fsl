@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rap>
+    <header domain='fmrirun' desc='Run FSL eddy for distortion and motion correction' modality='FMRI'/>
+
+    <hpc>
+        <timeBase>2</timeBase>
+        <memoryBase>1</memoryBase>
+    </hpc>
+
+    <permanenceofoutput>1</permanenceofoutput>
+
+    <inputstreams>
+        <stream domain="fmrirun" tobemodified="0">acquisitionparameters</stream>
+        <stream domain="fmrirun" tobemodified="0">fieldcoefficients</stream>
+        <stream domain="fmrirun" tobemodified="0">movementparameters</stream>
+        <stream domain="fmrirun" tobemodified="0">dualpefieldmap</stream>
+        <stream domain="fmrirun" tobemodified="0" isrenameable="1">fmri</stream>
+        <stream domain="fmrirun" tobemodified="0" isrenameable="1">fmri_header</stream>
+    </inputstreams>
+    
+    <outputstreams>
+        <stream domain="fmrirun" isrenameable="1">fmri</stream>
+    </outputstreams>            
+</rap>

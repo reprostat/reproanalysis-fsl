@@ -7,6 +7,7 @@
 
     <!-- preprocessing -->
     <module><name>topup</name></module>
-    
+    <module><name>eddy</name></module>
+
     <!-- analysis -->
 </rap>
