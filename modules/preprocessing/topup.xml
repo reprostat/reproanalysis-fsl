@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rap>
-    <header domain='fmrirun' desc='Run FSL topup to correct for distortions using two phase encode directions' modality='FMRI'/>
-            
+    <header domain='fmrirun' desc='Run FSL topup for distortion correction using fieldmaps with opposing phase encode directions' modality='FMRI'/>
+
     <hpc>
         <timeBase>1</timeBase>
         <memoryBase>1</memoryBase>
     </hpc>
 
     <permanenceofoutput>-1</permanenceofoutput>
+    
+    <settings>
+        <applytopup desc='Apply topup on input image?'>0</applytopup>
+    </settings>
 
     <inputstreams>
-        <stream domain="fmrirun">dualpefieldmap</stream>
-        <stream domain="fmrirun">dualpefieldmap_header</stream>
-        <stream domain="fmrirun" tobemodified="0">fmri_header</stream>
+        <stream domain="fmrirun" tobemodified="0">dualpefieldmap</stream>
+        <stream domain="fmrirun" tobemodified="0">dualpefieldmap_header</stream>
+        <stream domain="fmrirun" tobemodified="0" isessential="0" isrenameable="1">fmri</stream>
+        <stream domain="fmrirun" tobemodified="0" isessential="0" isrenameable="1">fmri_header</stream>
     </inputstreams>
 
     <outputstreams>
-        <stream domain="fmrirun">topup_acquisition_parameters</stream>
-        <stream domain="fmrirun">topup_output_movpar</stream>
-        <stream domain="fmrirun">topup_output_fieldcoef</stream>
+        <stream domain="fmrirun">acquisitionparameters</stream>
+        <stream domain="fmrirun">fieldcoefficients</stream>
+        <stream domain="fmrirun">movementparameters</stream>
+        <stream domain="fmrirun">dualpefieldmap</stream>
+        <stream domain="fmrirun" isrenameable="1">fmri</stream>
     </outputstreams>
 </rap>
 
