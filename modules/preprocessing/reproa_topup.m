@@ -1,4 +1,4 @@
-function rap = topupeddy(rap,command,subj,run)
+function rap = reproa_topup(rap,command,subj,run)
 
     switch command
 

@@ -1,5 +1,5 @@
 function test_LEMON_MRI_fmri(rap)
-    rap.tasksettings.fromnifti_fieldmap.pattern = 'acq-SEfmapBOLDpre';
+    rap.tasksettings.reproa_fromnifti_fieldmap.pattern = 'acq-SEfmapBOLDpre';
 
     rap = processBIDS(rap);
 

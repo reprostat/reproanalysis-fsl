@@ -1,4 +1,4 @@
-function rap = eddy(rap,command,subj,run)
+function rap = reproa_eddy(rap,command,subj,run)
 
 switch command
     case 'doit'
