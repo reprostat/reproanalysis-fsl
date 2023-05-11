@@ -1,3 +1,34 @@
+% mask
+%   fslmaths topup_fieldmap -Tmean topup_mean
+%   bet topup_mean topup_brain -n -m -f 0.2
+%   topup_brain_mask.nii
+% index
+%    dlmwrite('index.txt',ones(1,nVol),'delimiter',' ');
+% bvals
+%    dlmwrite('bvals',zeros(1,nVol),'delimiter',' ');
+% bvecs
+%    dlmwrite('bvecs',repmat([1;0;0],1,nVol),'delimiter',' ');
+% slspec
+%    slspec = unique(header{1}.sliceorder,'stable')-1;
+%    mbf = numel(header{1}.sliceorder)/numel(slspec);
+%    for b = 2:mbf
+%        slspec(:,b) = slspec(:,1)+(b-1)*size(slspec,1);
+%    end
+%    dlmwrite('slspec.txt',slspec,'delimiter',' ');
+%
+% eddy_cuda10.2 \
+%     --imain=$WDIR/sub-032301_ses-01_task-rest_acq-AP_run-01_bold.nii \
+%     --mask=$WDIR/topup_mask_mask.nii \
+%     --acqp=$WDIR/acquisition_parameters.txt \
+%     --index=$WDIR/index.txt \
+%     --bvecs=$WDIR/bvecs \
+%     --bvals=$WDIR/bvals \
+%     --topup=$WDIR/topup \
+%     --out=$WDIR/eddy-cuda-full \
+%     --niter=10 --fwhm=10,10,5,5,0,0,0,0,0,0 --repol \
+%     --slspec=$WDIR/slspec.txt --mporder=8 --s2v_niter=5 --s2v_lambda=1 --s2v_interp=trilinear \
+%     --estimate_move_by_susceptibility --mbs_niter=20 --mbs_lambda=5 --mbs_ksp=5 \
+%     --b0_only --data_is_shelled --verbose 
 function rap = reproa_eddy(rap,command,subj,run)
 
 switch command

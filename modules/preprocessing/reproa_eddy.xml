@@ -12,13 +12,14 @@
     <inputstreams>
         <stream domain="fmrirun" tobemodified="0">acquisitionparameters</stream>
         <stream domain="fmrirun" tobemodified="0">fieldcoefficients</stream>
-        <stream domain="fmrirun" tobemodified="0">movementparameters</stream>
         <stream domain="fmrirun" tobemodified="0">dualpefieldmap</stream>
+        <stream domain="fmrirun" tobemodified="0">dualpefieldmap_movementparameters</stream>
         <stream domain="fmrirun" tobemodified="0" isrenameable="1">fmri</stream>
         <stream domain="fmrirun" tobemodified="0" isrenameable="1">fmri_header</stream>
     </inputstreams>
-    
+
     <outputstreams>
         <stream domain="fmrirun" isrenameable="1">fmri</stream>
-    </outputstreams>            
+        <stream domain="fmrirun" isrenameable="1">movementparameters</stream>
+    </outputstreams>
 </rap>

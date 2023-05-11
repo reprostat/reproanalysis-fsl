@@ -50,9 +50,8 @@ function rap = reproa_topup(rap,command,subj,run)
                                       fnAllPE, fnAcq, rap.directoryconventions.fsldir, fullfile(localFolder,pfxTopup), fullfile(localFolder,[pfxTopup '_fieldmap'])));
 
             putFileByStream(rap,rap.tasklist.currenttask.domain,[subj run],'fieldcoefficients',spm_select('FPList',localFolder, ['^' pfxTopup '_fieldcoef.*']));
-            putFileByStream(rap,rap.tasklist.currenttask.domain,[subj run],'movementparameters',fullfile(localFolder, [pfxTopup '_movpar.txt']));
             putFileByStream(rap,rap.tasklist.currenttask.domain,[subj run],'dualpefieldmap',spm_select('FPList',localFolder, ['^' pfxTopup '_fieldmap.*']));
- 
+            putFileByStream(rap,rap.tasklist.currenttask.domain,[subj run],'dualpefieldmap_movementparameters',fullfile(localFolder, [pfxTopup '_movpar.txt']));
 
             % Apply topup
             if getSetting(rap,'applytopup')
@@ -66,7 +65,7 @@ function rap = reproa_topup(rap,command,subj,run)
                                                      isequal((sliceAxes == p(1))*str2double(fliplr(regexprep(p,'[ijk]','1'))),tableTopup(r,1:3)),...
                                                      1:size(tableTopup,1)))),...
                                    cellstr(header{1}.PhaseEncodingDirection));
-                
+
                 % - run
                 fnOut = spm_file(fnData,'prefix',[pfxTopup '_']);
                 try
@@ -77,8 +76,8 @@ function rap = reproa_topup(rap,command,subj,run)
                                               fnData,fnAcq,strrep(num2str(indTable),'  ',','),fullfile(localFolder,pfxTopup),fnOut));
                 end
                 putFileByStream(rap,rap.tasklist.currenttask.domain,[subj run],'fmri',fnOut);
-            end           
-            
+            end
+
         case 'checkrequirements'
             if ~getSetting(rap,'applytopup') % Remove (optional) input and output stream not to be used and created
                 for input = setdiff({rap.tasklist.currenttask.inputstreams.name},{'dualpefieldmap' 'dualpefieldmap_header'})

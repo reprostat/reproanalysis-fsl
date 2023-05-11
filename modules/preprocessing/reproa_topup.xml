@@ -8,7 +8,7 @@
     </hpc>
 
     <permanenceofoutput>-1</permanenceofoutput>
-    
+
     <settings>
         <applytopup desc='Apply topup on input image?'>0</applytopup>
     </settings>
@@ -23,8 +23,8 @@
     <outputstreams>
         <stream domain="fmrirun">acquisitionparameters</stream>
         <stream domain="fmrirun">fieldcoefficients</stream>
-        <stream domain="fmrirun">movementparameters</stream>
         <stream domain="fmrirun">dualpefieldmap</stream>
+        <stream domain="fmrirun">dualpefieldmap_movementparameters</stream>
         <stream domain="fmrirun" isrenameable="1">fmri</stream>
     </outputstreams>
 </rap>
