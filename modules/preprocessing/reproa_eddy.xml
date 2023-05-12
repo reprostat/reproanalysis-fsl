@@ -9,6 +9,13 @@
 
     <permanenceofoutput>1</permanenceofoutput>
 
+    <settings>
+        <wheretoprocess desc="Where to run EDDY? (GPU MUST have enought VRAM)" options="cpu|gpu|auto" ui="optionlist">auto</wheretoprocess>
+        <mode desc="How extensive EDDY will be?; minimum - 5 iterations with fwhm=0, medium - 7 iterations with fwhm=10,0,0,0,0,0,0, extensive - 10 iterations with fwhm=10,10,5,5,0,0,0,0,0,0" options="light|medium|heavy" ui="optionlist">light</mode>
+        <susceptibilitybymovement desc="Estimate how the susceptibility-induced field changes when the subject moves in the scanner" ui="yesno">1</susceptibilitybymovement>
+        <slicetovolume desc="Only when wheretoprocess is not cpu" ui="yesno">1</slicetovolume>
+    </settings>
+
     <inputstreams>
         <stream domain="fmrirun" tobemodified="0">acquisitionparameters</stream>
         <stream domain="fmrirun" tobemodified="0">fieldcoefficients</stream>
