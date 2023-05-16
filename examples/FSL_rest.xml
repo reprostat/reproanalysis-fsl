@@ -6,8 +6,9 @@
     <module><name>reproa_fromnifti_fieldmap</name></module>
 
     <!-- preprocessing -->
-    <module><name>reproa_topup</name></module>
-    <module><name>reproa_eddy</name></module>
+    <module><name>reproa_topup_fmri</name></module>
+    <module><name>reproa_eddy_fmri</name></module>
+    <module><name>reproa_aroma</name></module>
 
     <!-- analysis -->
 </rap>

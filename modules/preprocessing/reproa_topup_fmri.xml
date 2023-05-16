@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rap>
-    <header domain='fmrirun' desc='Run FSL topup for distortion correction using fieldmaps with opposing phase encode directions' modality='FMRI'/>
+    <header mfile='reproa_topup' domain='fmrirun' desc='Run FSL topup for distortion correction using fieldmaps with opposing phase encode directions' modality='FMRI'/>
 
     <hpc>
         <timeBase>1</timeBase>
