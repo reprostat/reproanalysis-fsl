@@ -1,4 +1,4 @@
-function [s, w]=runFslCommand(rap,fslcmd,ENV)
+function [s, w] = runFslCommand(rap,fslcmd,ENV,varargin)
 
 % Setup
 fslsetup = deblank(rap.directoryconventions.fslsetup);
@@ -8,6 +8,7 @@ if not(isempty(fslsetup))
 end
 
 if nargin < 3, ENV = {}; end
+if nargin < 5, varargin = {}; end
 
 global reproacache
 if ~reproacache.isKey('toolbox.spm'), logging.error('SPM is not found'); end
@@ -18,7 +19,4 @@ ENV = vertcat(ENV,{...
     'MATLABPATH', SPMtool.toolPath;...
     });
 
-[s, w] = shell(fslcmd,'shellprefix',fslsetup,'environment',ENV);
-
-% Display error if there was one
-if s, logging.error('runFslCommand:Error running %s\n%s',cmd,w); end
+[s, w] = shell(fslcmd,'shellprefix',fslsetup,'environment',ENV,varargin{:});
