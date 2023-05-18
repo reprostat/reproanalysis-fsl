@@ -8,7 +8,22 @@
     <!-- preprocessing -->
     <module><name>reproa_topup_fmri</name></module>
     <module><name>reproa_eddy_fmri</name></module>
-    <module><name>reproa_aroma</name></module>
+
+    <module>
+        <branch>
+            <analysisidsuffix>_coregtostruct</analysisidsuffix>
+            <module><name>reproa_coregextended</name></module>
+        </branch>
+        <branch>
+            <analysisidsuffix>_coregtofmri</analysisidsuffix>
+            <module><name>reproa_coregextended</name></module>
+        </branch>
+    </module>
+
+    <!-- module><name>reproa_coregextended_t2</name></module>
+    <module><name>reproa_segment</name></module>
+
+    <module><name>reproa_aroma</name></module -->
 
     <!-- analysis -->
 </rap>
