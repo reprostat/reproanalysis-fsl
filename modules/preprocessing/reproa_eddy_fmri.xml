@@ -27,6 +27,8 @@
 
     <outputstreams>
         <stream domain="fmrirun" isrenameable="1">fmri</stream>
+        <stream domain="fmrirun" isrenameable="1">meanfmri</stream>
+        <stream domain="fmrirun" isrenameable="1">brainmask</stream>        
         <stream domain="fmrirun" isrenameable="1">movementparameters</stream>
     </outputstreams>
 </rap>

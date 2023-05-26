@@ -116,13 +116,18 @@ switch command
         if strcmp(rap.tasklist.currenttask.domain,'fmrirun'), strEddyParam = [strEddyParam ' --b0_only']; end
 
         % Now run eddy
-        cmd = sprintf('%s --imain=%s --mask=%s --acqp=%s --index=%s --bvecs=%s --bvals=%s --topup=%s --out=%s %s --repol --data_is_shelled --verbose', ...
-                      strEddy,fnData{1},fnMask,fnAcq{1},fnAcqInd,fnBVecs,fnBVals,fnTopup,fullfile(localFolder,pfxEddy),strEddyParam);
+        runFslCommand(rap,sprintf('%s --imain=%s --mask=%s --acqp=%s --index=%s --bvecs=%s --bvals=%s --topup=%s --out=%s %s --repol --data_is_shelled --verbose', ...
+                                  strEddy,fnData{1},fnMask,fnAcq{1},fnAcqInd,fnBVecs,fnBVals,fnTopup,fullfile(localFolder,pfxEddy),strEddyParam));
+        fnFmri = spm_select('FPList',localFolder, ['^' pfxEddy '\.[^(eddy)]']);
 
-        runFslCommand(rap,cmd);
+        % Generate mean fmri
+        fnMeanFmri = spm_file(fnFmri(1,:),'prefix','mean_');
+        runFslCommand(rap,sprintf('fslmaths %s -Tmean %s',fnFmri,fnMeanFmri));
 
         % Outputs
-        putFileByStream(rap,rap.tasklist.currenttask.domain,[subj run],'fmri',spm_select('FPList',localFolder, ['^' pfxEddy '\.[^(eddy)]']));
+        putFileByStream(rap,rap.tasklist.currenttask.domain,[subj run],'fmri',fnFmri);
+        putFileByStream(rap,rap.tasklist.currenttask.domain,[subj run],'meanfmri',fnMeanFmri);
+        putFileByStream(rap,rap.tasklist.currenttask.domain,[subj run],'brainmask',fnMask);
         putFileByStream(rap,rap.tasklist.currenttask.domain,[subj run],'movementparameters',fullfile(localFolder,[pfxEddy '.eddy_parameters']));
 
         % QA (for DWI only)
