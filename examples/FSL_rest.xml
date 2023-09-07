@@ -23,9 +23,10 @@
     <module><name>reproa_coregextended_t2</name></module>
     <module><name>reproa_segment</name></module>
     <module><name>reproa_mask_segmentation</name></module>
+    <module><name>reproa_smooth_fmri</name></module>
     <module><name>reproa_signal_segmentations</name></module>
 
-    <!--module><name>reproa_aroma</name></module-->
+    <module><name>reproa_aroma</name></module>
 
     <!-- analysis -->
 </rap>
