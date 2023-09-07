@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rap>
-    <header domain='fmrirun' desc='Denoise fMRI using ICA-AROMA' modality='FMRI'/>
+    <header domain="fmrirun" desc="Denoise fMRI using ICA-AROMA" modality="FMRI"/>
 
     <hpc>
         <timeBase>2</timeBase>
@@ -10,14 +10,24 @@
     <permanenceofoutput>1</permanenceofoutput>
 
     <settings>
-        <writenormalised desc="Write out normalised fMRI">0</writenormalised>
+        <normalisationresolution desc="spatial resoltuiton of reference used for FLIRT and FNIRT" options="1mm|2mm" ui="optionlist">2mm</normalisationresolution>
+        <highpassfilter desc="in seconds">100</highpassfilter>
+        <includemovementparameters desc="Realignment parameters (if included) to be (extended and) included, [MxN] binary matrix where M corresponds to order (identical, squared, cubed, etc.) and 1:N-1 corresponds to derivatives/gradients (identical, grad(), grad(grad()), etc.) of the desired extension, the Nth column corresponds to spin history">[1 0 0; 1 0 0]</includemovementparameters>
+        <includesegmentationsignal desc="colon-seperated list of signal names as [content-column, e.g., components-WMc1] of segmentationsignal"></includesegmentationsignal>
+        <numberofdimensions desc="Dimensionality reduction into a defined number of dimensions (0 - automatic estimation)">0</numberofdimensions>
+        <componentregression desc="amount of noise to remove" options="partial|full|both" ui="optionlist">partial</componentregression>
+        <writenormalised desc="Write out FNIRT-normalised fMRI">0</writenormalised>
+        <cleanup desc="free up space by removing filtered fmri and MELODIC">0</cleanup>
     </settings>
 
     <inputstreams>
         <stream domain="subject" tobemodified="0">structural</stream>
+        <stream domain="subject" tobemodified="0" isrenameable="1" isessential="0">structural_brain</stream>
         <stream domain="fmrirun" tobemodified="0">fmri</stream>
-        <stream domain="fmrirun" tobemodified="0" isrenameable="1">fmri_header</stream>
-        <stream domain="fmrirun" tobemodified="0">movementparameters</stream>
+        <stream domain="fmrirun" tobemodified="0">fmri_header</stream>
+        <stream domain="fmrirun" tobemodified="0">brainmask</stream>
+        <stream domain="fmrirun" tobemodified="0" isessential="0">movementparameters</stream>
+        <stream domain="fmrirun" tobemodified="0" isessential="0">segmentationsignal</stream>
    </inputstreams>
 
     <outputstreams>
