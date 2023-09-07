@@ -25,6 +25,7 @@
         <stream domain="fmrirun">fieldcoefficients</stream>
         <stream domain="fmrirun">dualpefieldmap</stream>
         <stream domain="fmrirun">dualpefieldmap_movementparameters</stream>
+        <stream domain="fmrirun">fieldmap</stream>
         <stream domain="fmrirun" isrenameable="1">fmri</stream>
     </outputstreams>
 </rap>

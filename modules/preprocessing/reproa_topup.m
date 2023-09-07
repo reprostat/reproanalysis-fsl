@@ -46,12 +46,21 @@ function rap = reproa_topup(rap,command,subj,run)
             runFslCommand(rap,['fslmerge -t ' fnAllPE ' ' strjoin(fnAll,' ')]);
 
             % Estimate topup
-            runFslCommand(rap,sprintf('topup --imain=%s --datain=%s --config=%s/etc/flirtsch/b02b0.cnf  --out=%s --iout=%s',...
-                                      fnAllPE, fnAcq, rap.directoryconventions.fsldir, fullfile(localFolder,pfxTopup), fullfile(localFolder,[pfxTopup '_fieldmap'])));
+            runFslCommand(rap,sprintf('topup --imain=%s --datain=%s --config=%s/etc/flirtsch/b02b0.cnf  --out=%s --iout=%s --fout=%s',...
+                                      fnAllPE, fnAcq, rap.directoryconventions.fsldir,...
+                                      fullfile(localFolder,pfxTopup),...
+                                      fullfile(localFolder,rap.directoryconventions.fieldmapsdirname,[pfxTopup '_dualpefieldmap']),...
+                                      fullfile(localFolder,rap.directoryconventions.fieldmapsdirname,[pfxTopup '_fieldmap'])));
 
-            putFileByStream(rap,rap.tasklist.currenttask.domain,[subj run],'fieldcoefficients',spm_select('FPList',localFolder, ['^' pfxTopup '_fieldcoef\..*$']));
-            putFileByStream(rap,rap.tasklist.currenttask.domain,[subj run],'dualpefieldmap',spm_select('FPList',localFolder, ['^' pfxTopup '_fieldmap\..*$']));
-            putFileByStream(rap,rap.tasklist.currenttask.domain,[subj run],'dualpefieldmap_movementparameters',fullfile(localFolder, [pfxTopup '_movpar.txt']));
+            putFileByStream(rap,rap.tasklist.currenttask.domain,[subj run],'fieldcoefficients',...
+                            spm_select('FPList',localFolder, ['^' pfxTopup '_fieldcoef\..*$']));
+            putFileByStream(rap,rap.tasklist.currenttask.domain,[subj run],'dualpefieldmap',...
+                            spm_select('FPList',fullfile(localFolder,rap.directoryconventions.fieldmapsdirname),['^' pfxTopup '_dualpefieldmap\..*$']));
+            putFileByStream(rap,rap.tasklist.currenttask.domain,[subj run],'dualpefieldmap_movementparameters',...
+                            fullfile(localFolder, [pfxTopup '_movpar.txt']));
+            putFileByStream(rap,rap.tasklist.currenttask.domain,[subj run],'fieldmap',...
+                            struct('magnitude',spm_select('FPList',fullfile(localFolder,rap.directoryconventions.fieldmapsdirname),['^' pfxTopup '_dualpefieldmap\..*$']),...
+                                   'fieldmap',spm_select('FPList',fullfile(localFolder,rap.directoryconventions.fieldmapsdirname),['^' pfxTopup '_fieldmap\..*$'])));
 
             % Apply topup
             if getSetting(rap,'applytopup')
@@ -83,7 +92,7 @@ function rap = reproa_topup(rap,command,subj,run)
                 for input = setdiff({rap.tasklist.currenttask.inputstreams.name},{'dualpefieldmap' 'dualpefieldmap_header'})
                     rap = renameStream(rap,rap.tasklist.currenttask.name,'input',input{1},[]);
                     logging.info('REMOVED: %s input stream: %s', rap.tasklist.currenttask.name,input{1});
-                    if contains(input{1},'header'), continue; end
+                    if lookFor(input{1},'header'), continue; end
                     rap = renameStream(rap,rap.tasklist.currenttask.name,'output',input{1},[]);
                     logging.info('REMOVED: %s output stream: %s', rap.tasklist.currenttask.name,input{1});
                 end
