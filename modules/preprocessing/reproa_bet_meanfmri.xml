@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rap>
+    <header mfile="reproa_bet" domain="subject" desc="Use the FSL Brain Extraction Tool (BET)" modality="FMRI"/>
+
+    <hpc>
+        <timeBase>0.25</timeBase>
+        <memoryBase>0.25</memoryBase>
+    </hpc>
+
+    <permanenceofoutput>2</permanenceofoutput>
+
+    <settings>
+        <f desc="fractional intensity threshold, smaller values give larger brain outline estimates">0.3</f>
+        <dofmri desc="fMRI-specific preset: f is set to 0.3 and the resulted brain mask is dilated">1</dofmri>
+    </settings>
+
+    <inputstreams>
+        <stream domain="subject" tobemodified="0">meanfmri</stream>
+    </inputstreams>
+
+    <outputstreams>
+        <stream domain="subject">meanfmri</stream>
+        <stream domain="subject" isrenameable="1">brainmask</stream>
+        <stream domain="subject" isrenameable="1">brainmaskmesh</stream>
+    </outputstreams>
+</rap>
