@@ -134,6 +134,15 @@ switch command
         end
         N.dat = reshape(N.dat,dim);
 
+        % create meanfMRI for registration
+        fnMeanFmri = spm_file(fnFmri,'prefix','mean_');
+        runFslCommand(rap, sprintf('fslmaths %s -Tmean %s', fnFmri, fnMeanFmri));
+
+        % rigid-body (6DOF) register (FLIRT) functional to structural
+        fnMFunc2Struct = fullfile(localPath,'func2struct.mat');
+        logging.info('Running FLIRT on %s...', fnStructuralBrain);
+        runFslCommand(rap, sprintf('flirt -in %s -ref %s -omat %s -dof 6', fnMeanFmri, fnStructuralBrain, fnMFunc2Struct));
+
         %% Run AROMA
         switch getSetting(rap,'componentregression')
             case 'partial'
@@ -150,8 +159,8 @@ switch command
         rap.directoryconventions.fsloutputtype = 'NIFTI2_GZ';
         logging.info('Running AROMA on %s...', fnFmri);
         runPyCommand(rap,...
-                     sprintf('python %s -i %s -o %s -tr %1.3f -mc %s -w %s -m %s -dim %d -den %s',...
-                             fnAROMA, fnFmri, aromaPath, header{1}.volumeTR, fnNoise, fnWStruct2MNI,...
+                     sprintf('python %s -i %s -o %s -tr %1.3f -mc %s -a %s -w %s -m %s -dim %d -den %s',...
+                             fnAROMA, fnFmri, aromaPath, header{1}.volumeTR, fnNoise, fnMFunc2Struct, fnWStruct2MNI,...
                              char(getFileByStream(rap,'fmrirun',[subj run],'brainmask')),getSetting(rap,'numberofdimensions'),parDenoise),...
                      AROMA.condaEnvironment,'runFsl',true);
         rap.directoryconventions.fsloutputtype = fsloutputtype0;
@@ -179,6 +188,7 @@ switch command
         %% Cleanup
         if getSetting(rap,'cleanup')
             delete(fnFmri);
+            delete(fnMeanFmri);
             dirRemove(fullfile(aromaPath,'melodic.ica'));
         end
 
