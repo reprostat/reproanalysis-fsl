@@ -185,6 +185,78 @@ switch command
         end
         putFileByStream(rap,'fmrirun',[subj run],'fmri',out);
 
+        %% Diagnostics
+        visFig = 'off';
+
+        % read classification
+        fnClass = fullfile(aromaPath,'classified_motion_ICs.txt');
+        iCBad = dlmread(fnClass);
+
+        % get structural
+        bg = char(getFileByStream(rap,'subject',subj,'structural_brain'));
+
+        offX = 0; offY = 0;
+        for iC = 1:size(spm_select('List',fullfile(aromaPath,'melodic.ica','report'),'^t[0-9]*\.txt'),1)
+            logging.info('Processing IC: %d\n',iC);
+
+            % Spatial component
+            fnStat = sprintf(fullfile(aromaPath,'melodic.ica','stats','thresh_zstat%d.nii.gz'),iC);
+            Y = spm_read_vols(spm_vol(fnStat));
+            fig = spm_figure('GetWin','Graphics');
+            set(fig,'visible',visFig);
+            spm_check_registration(bg);
+            spm_orthviews('addtruecolourimage',1,fnStat,[0.5 0.5 0.5; hot],0.6,max(Y(:)),min(Y(Y>0)));
+            spm_orthviews('Reposition',[0 0 20]); % assuming neck -> brain is a bit higher
+            global st
+            slicesSummary = cell(1,3);
+            spm_orthviews('Xhairs','off');
+            for a = 1:3
+                fr = getframe(st.vols{1}.ax{a}.ax);
+                slicesSummary{a} = fr.cdata;
+            end
+            close(fig);
+
+            img = slicesSummary{3};
+            img(1:size(slicesSummary{2},1),end+1:end+size(slicesSummary{2},2),:) = slicesSummary{2};
+            img(1:size(slicesSummary{1},1),end+1:end+size(slicesSummary{1},2),:) = slicesSummary{1};
+            img = img(11:end-10,11:end-10,:);
+
+            % - remove background
+            [nVal, val] = hist(img(:),0:255);
+            [~,oVal] = sort(nVal);
+            for cBg = val(oVal(end-1:end))
+                img(repmat((img(:,:,1) == cBg) & (img(:,:,2) == cBg) & (img(:,:,3) == cBg),1,1,3)) = 255;
+            end
+
+            % temporal component
+            fnTs = sprintf(fullfile(aromaPath,'melodic.ica','report','t%d.txt'),iC);
+            fig = figure('visible',visFig);
+            set(fig, 'Position',[1 1 size(img,1)*4 size(img,1)])
+            ts = dlmread(fnTs);
+            if ismember(iC,iCBad)
+                plot(1:numel(ts),ts,'r','LineWidth',1.5);
+            else
+                plot(1:numel(ts),ts,'g','LineWidth',1.5);
+            end
+            set(gca,'xaxislocation','origin','Units','pixels','Position',[1 1 size(img,1)*4 size(img,1)])
+            legend(sprintf('IC: %d',iC),'location','northwest')
+            set(gca,'FontSize',24);
+            fr = getframe(gca);
+            close(fig);
+
+            img = [img fr.cdata];
+
+            imgAll(offY+1:offY+size(img,1),offX+1:offX+size(img,2),:) = img;
+            if mod(iC,2) % odd
+                offX = 0;
+                offY = offY + size(img,1);
+            else % even
+                offX = offX + size(img,2);
+            end
+        end
+
+        imwrite(imgAll,fullfile(localPath,sprintf('diagnostic_%s.jpg',rap.tasklist.currenttask.name)));
+
         %% Cleanup
         if getSetting(rap,'cleanup')
             delete(fnFmri);
