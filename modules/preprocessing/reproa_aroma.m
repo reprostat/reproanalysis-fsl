@@ -202,7 +202,7 @@ switch command
             % Spatial component
             fnStat = sprintf(fullfile(aromaPath,'melodic.ica','stats','thresh_zstat%d.nii.gz'),iC);
             Y = spm_read_vols(spm_vol(fnStat));
-            fig = spm_figure('GetWin','Graphics');
+            fig = spm_figure('CreateWin','Graphics','',false);
             set(fig,'visible',visFig);
             spm_check_registration(bg);
             spm_orthviews('addtruecolourimage',1,fnStat,[0.5 0.5 0.5; hot],0.6,max(Y(:)),min(Y(Y>0)));
