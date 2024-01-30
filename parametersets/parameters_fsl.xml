@@ -2,6 +2,7 @@
 <rap>
 
     <directoryconventions>
+        <FSLT1 desc="Location of FSL T1 template relative to FSL path" ui="dir">data/standard/MNI152_T1_1mm.nii.gz</FSLT1>
         <fsldir desc="Path to fsl" ui="dir"></fsldir>
         <fslsetup desc="Path to fsl setup script, executing before any fsl command" ui="text"></fslsetup>
         <fsloutputtype desc="Output type used by FSL (GZs are not supported by SPM)" options="NIFTI2|NIFTI|NIFTI2_PAIR|NIFTI_PAIR" ui="optionlist">NIFTI2</fsloutputtype>
