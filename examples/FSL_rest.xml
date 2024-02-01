@@ -9,24 +9,23 @@
     <module><name>reproa_topup_fmri</name></module>
     <module><name>reproa_eddy_fmri</name></module>
 
-    <module>
-        <branch>
-            <analysisidsuffix>_coregtostruct</analysisidsuffix>
-            <module><name>reproa_coregextended</name></module>
-        </branch>
-        <branch>
-            <analysisidsuffix>_coregtofmri</analysisidsuffix>
-            <module><name>reproa_coregextended</name></module>
-        </branch>
-    </module>
-
+    <module><name>reproa_coregextended</name></module>
     <module><name>reproa_coregextended_t2</name></module>
     <module><name>reproa_segment</name></module>
-    <module><name>reproa_mask_segmentation</name></module>
+    <module><name>reproa_mask_segmentations</name></module>
     <module><name>reproa_smooth_fmri</name></module>
     <module><name>reproa_signal_segmentations</name></module>
 
-    <module><name>reproa_aroma</name></module>
+    <module>
+        <branch>
+            <analysisidsuffix>_aroma</analysisidsuffix>
+            <module><name>reproa_aroma</name></module>
+        </branch>
+        <branch>
+            <analysisidsuffix>_aromaacompcorr</analysisidsuffix>
+            <module><name>reproa_aroma</name></module>
+        </branch>
+    </module>
 
     <!-- analysis -->
 </rap>
