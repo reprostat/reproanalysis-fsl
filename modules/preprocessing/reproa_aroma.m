@@ -290,8 +290,8 @@ switch command
         if ~exist(fnAROMA,'file'), logging.error('%s: ICA-AROMA executable %s not found.', mfilename, fnAROMA);end
 
         % - conda environment
-        [s,w] = runPyCommand(rap,'conda info -e','','quiet',true);
-        if ~any(strcmp(regexp(w,'(?<=\n)[^\ ]*','match'),AROMA.condaEnvironment))
+        [s,w] = runPyCommand(rap,'conda env list --json','','quiet',true);  resp = jsondecode(w);
+        if ~any(strcmp(spm_file(resp.envs,'basename'),AROMA.condaEnvironment))
             logging.error('%s: conda environment %s not found.', mfilename, AROMA.condaEnvironment);
         end
 end
