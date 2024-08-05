@@ -2,6 +2,11 @@
 <rap>
 
     <directoryconventions>
+        <toolbox desc="Toolbox with implemented interface in extrafunctions/toolboxes" ui="custom">
+            <name desc="Name corresponding to the name of the interface without the &quot;Class&quot; suffix" ui="text">aroma</name>
+            <dir ui="dir_list"></dir>
+            <extraparameters ignorecheck='1'/>
+        </toolbox>
         <FSLT1 desc="Location of FSL T1 template relative to FSL path" ui="dir">data/standard/MNI152_T1_1mm.nii.gz</FSLT1>
         <fsldir desc="Path to fsl" ui="dir"></fsldir>
         <fslsetup desc="Path to fsl setup script, executing before any fsl command" ui="text"></fslsetup>
